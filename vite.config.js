@@ -67,9 +67,10 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @use "@styles/_element.scss" as *;
+          // @use "@styles/_element.scss" as *;
           @use "@styles/_mixins.scss" as *;
           @use "@styles/_variables.scss" as *;
+           @use "@/styles/mixins.scss" as *;
         `,
       }
     }
@@ -93,10 +94,9 @@ export default defineConfig({
     host: '0.0.0.0', // 允许外部访问
     open: true, // 自动打开浏览器
     proxy: {
-      '/dev-api': {
-        target: 'http://192.168.2.200/test',
+      '/api': {
+        target: 'http://127.0.0.1:8092',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/dev-api/, ''),
       },
     },
   }
