@@ -182,7 +182,6 @@ const handleLogin = async () => {
 async function getUser() {
   try {
     const data = await getUserInforApi()
-    console.log(data,'222222222222')
     sessionStorage.setItem('username', username)
     ElMessage.success(`登录成功！欢迎 ${username}`)
     // router.push('/viewer')
