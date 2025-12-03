@@ -1,0 +1,101 @@
+@mixin cursor($cursor: pointer) {
+  cursor: $cursor;
+  user-select: none;
+}
+@mixin box($borderRadius: 8px, $boxShadow: 0 0 18px rgba(#000000, 0.1)) {
+  background-color: #ffffff;
+  border-radius: $borderRadius;
+  box-shadow: $boxShadow;
+}
+@mixin ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin ellipsisMultipleLines($line: 1) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+@mixin buttonSline() {
+  position: relative;
+  display: flex;
+  flex: 1;
+  & + button {
+    margin-left: 0;
+  }
+
+  &:not(:last-child) {
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 1px;
+      height: 10px;
+      background-color: var(--el-border-color);
+      transform: translate(0, -50%) translateZ(0);
+    }
+  }
+}
+@mixin descriptionsItemsText($strongMarginTop: 3px, $smallMarginTop: 5px) {
+  strong {
+    margin-top: $strongMarginTop;
+    font-size: 14px;
+    color: #434343;
+    font-weight: 500;
+  }
+
+  small {
+    margin-top: $smallMarginTop;
+    font-size: 13px;
+    color: #999999;
+  }
+}
+@mixin lineLabel() {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  color: #434343;
+
+  &::before {
+    content: '';
+    display: flex;
+    flex: none;
+    background-color: #216ff6;
+    border-radius: 2px;
+    width: 4px;
+    height: 20px;
+    margin-right: 5px;
+  }
+}
+
+@mixin selected-icon($s: 40px, $color: #216ff6, $border-radius: 6px) {
+  &::before {
+    font-family: 'iconfont';
+    content: '\e62d';
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    color: #ffffff;
+    font-size: 23px;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: $s 0 0 $s;
+    border-color: $color transparent transparent;
+    border-radius: 0 $border-radius 0 0;
+  }
+}
