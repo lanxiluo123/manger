@@ -13,6 +13,11 @@
       </el-menu-item>
     </template>
   </el-sub-menu>
+    <el-menu-item v-else :index="items.name" @click="handleTo(items)">
+    <template #title>
+      <span>{{ items?.name || '--'}}</span>
+    </template>
+  </el-menu-item>
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
