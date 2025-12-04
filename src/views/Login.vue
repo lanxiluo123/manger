@@ -181,10 +181,11 @@ const handleLogin = async () => {
 
 async function getUser() {
   try {
-    const data = await getUserInforApi()
+    const { data: { userId = '', username = '' } } = {} = await getUserInforApi()
     sessionStorage.setItem('username', username)
+    await router.isReady()
+    router.push('/viewer')
     ElMessage.success(`登录成功！欢迎 ${username}`)
-    // router.push('/viewer')
   } catch (error) {
 
   }
@@ -490,6 +491,7 @@ getCode();
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

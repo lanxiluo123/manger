@@ -34,7 +34,6 @@ import Nav from '@views/Layout/nav.vue'
   &-content {
     width: calc(100vw - $nav-width);
     height: 100%;
-
     &-routerConten {
       width: 100%;
       height: calc(100vh - 60px);

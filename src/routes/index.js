@@ -66,10 +66,30 @@ const router = createRouter({
             path: '/viewer',
             name: 'viewer',
             component: () => import(/* webpackChunkName: "login" */ '@views/viewer/index.vue'),
-            meta: {},
+            meta: { requiresAuth: true },
         }
 
     ]
+})
+router.beforeEach((to, from, next) => {
+    // 获取 token（这里假设 token 存储在 sessionStorage
+    const token = sessionStorage.getItem('token')
+
+    // 检查路由是否需要认证
+    if (to.meta.requiresAuth) {
+        // 有 token，允许访问
+        if (token) {
+            next()
+        }
+        // 没有 token，跳转到登录页
+        else {
+            next('/login')
+        }
+    }
+    // 不需要认证的路由，直接放行
+    else {
+        next()
+    }
 })
 
 export default router
