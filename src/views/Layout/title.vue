@@ -19,18 +19,24 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRouter ,useRoute } from 'vue-router';
+
+
+
+
+
+const router = useRouter()
+const route = ref(useRoute()) 
 
 const routerName = computed(() => {
-  return '首页'
+  return route.value?.meta?.title
 })
 
 const userName = computed(() => {
-  return '管理员'
+  return sessionStorage.getItem('username')
 })
 
-const router = useRouter()
 
 function routerTo() {
   router.push('/viewer')
