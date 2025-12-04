@@ -42,10 +42,16 @@ const router = createRouter({
                     meta: { title: '算法管理' }
                 },
                 {
+                    path: 'datep',
+                    name: 'datep',
+                    component: () => import(/* webpackChunkName: "home" */ '@views/DateP/index.vue'),
+                    meta: { title: '数据查询' }
+                },
+                {
                     path: 'date',
                     name: 'date',
                     component: () => import(/* webpackChunkName: "home" */ '@views/Date/index.vue'),
-                    meta: { title: '数据管理' }
+                    meta: { title: '数据类型管理' }
                 },
                 {
                     path: 'monitoring',
