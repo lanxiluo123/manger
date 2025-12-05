@@ -124,7 +124,6 @@
 </template>
 <script setup>
 import { computed, reactive, ref } from 'vue';
-import { KEYTYPEOPTIONS } from '@config/config.js'
 import {
     add as addApi,
     deletes as deletesApi,

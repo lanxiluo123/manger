@@ -35,26 +35,9 @@ export const arr = [
 
 ]
 
+export const PAGE_SIZE_OPTIONS = [20, 60, 100, 200];
+export const ALL_PAGE_SIZE = 100000;
 
-export const KEYTYPEOPTIONS = [
-    {
-        name: '数值型',
-        Value: ""
-    },
-    {
-        name: '文本型',
-        Value: ""
-    },
-    {
-        name: '枚举型',
-        Value: ""
-    },
-    {
-        name: '布尔型',
-        Value: ""
-    },
-    {
-        name: '文件选择',
-        Value: ""
-    },
-]
+export const OFFSET_BASE = 8;
+export const OFFSET_MIDDLE_BASE = 12;
+export const OFFSET_LARGE_BASE = 16;
