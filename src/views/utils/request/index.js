@@ -95,7 +95,7 @@ function handleBusinessError(code, message) {
         default:
             ElMessage.error({
                 message: errorMsg,
-                description:'1' ,
+                description: '1',
             });
         // return
     }
@@ -204,6 +204,15 @@ const request = {
             url,
             method: 'DELETE',
             params,
+            ...config,
+        });
+    },
+
+    delete1(url, data = {}, config = {}) {
+        return service({
+            url,
+            method: 'DELETE',
+            data,
             ...config,
         });
     },

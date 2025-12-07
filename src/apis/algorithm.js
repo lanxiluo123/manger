@@ -5,7 +5,7 @@ export function add(data) {
 }
 
 export function deletes(data) {
-    return request.delete('/algorithms', data)
+    return request.delete1('/algorithms', data)
 }
 
 export function getParmsType(){

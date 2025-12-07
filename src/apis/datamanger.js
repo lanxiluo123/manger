@@ -22,5 +22,5 @@ export function handlerDelete(id) {
 }
 
 export function handlerEdit(id, data) {
-    return request.put(`/api/data-types/{${id}}`, data)
+    return request.put(`/data/manage/${id}`, data)
 }

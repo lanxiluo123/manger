@@ -103,8 +103,8 @@
                                     <el-col :span="12">
                                         <el-form-item label="是否必填">
                                             <el-select v-model="rows.required" placeholder="" style="width:100%">
-                                                <el-option :label="'是'" :value="'true'" />
-                                                <el-option :label="'否'" :value="'false'" />
+                                                <el-option :label="'是'" :value="true" />
+                                                <el-option :label="'否'" :value="false" />
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
@@ -135,6 +135,7 @@ import {
 import {
     dataMangerLists as dataMangerListsApi
 } from '@apis/datamanger.js'
+import { ElMessage } from 'element-plus';
 
 const dialogVisible = ref(false)
 const form = reactive({
@@ -153,7 +154,7 @@ const form = reactive({
             required: ''
         }
     ],
-    name:''
+    name: ''
 })
 const activeNames = ref(['1', '2'])
 const titleName = computed(() => {
@@ -168,8 +169,34 @@ const param1 = ref([])
 const param2 = ref([])
 const param3 = ref([])
 const param4 = ref([])
+const emits = defineEmits(['success'])
 
-function openDialog() {
+function openDialog({
+    id = undefined,
+    name = '',
+    category = '',
+    version = '',
+    executionType = '',
+    scriptOrImagePath = '',
+    description = '',
+    outputDataTypeId = undefined,
+    paramMetas = []
+}) {
+
+    form.id = id
+    form.category = category
+    form.version = version
+    form.executionType = executionType
+    form.scriptOrImagePath = scriptOrImagePath
+    form.description = description
+    form.outputDataTypeId = outputDataTypeId ? outputDataTypeId.split(',') : ''
+    form.paramMetas = paramMetas.length == 0 ? [{
+        param: "",
+        paramType: '',
+        paramName: '',
+        required: ''
+    }] : paramMetas
+    form.name = name
     dialogVisible.value = true
 }
 
@@ -192,11 +219,14 @@ async function getAllTypes() {
 
 async function onSubmit() {
     try {
-        const { outputDataTypeId, ...options} = form
+        const { outputDataTypeId, ...options } = form
         await addApi({
             outputDataTypeId: outputDataTypeId.join(','),
             ...options
         })
+        ElMessage.success(  `${form.id ? '编辑' : '新增'}成功`)
+        emits('success', !!form.id)
+        dialogVisible.value = false
     } catch (error) {
 
     }
