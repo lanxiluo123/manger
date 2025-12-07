@@ -15,7 +15,7 @@
         </div>
         <div class="items_box-version">
             <i class="iconfont icon-cut" style="margin-right: 5px;font-size: 15px;"></i> 
-            <span style="width: 70px;">输出类型:</span><span style="margin-left: 5px;overflow: hidden;">{{ items?.outputDataTypeId}}</span>
+            <span class="word">输出类型:</span><span style="margin-left: 5px;overflow: hidden;">{{ items?.outputDataTypeId}}</span>
         </div>
         <div class="items_box-version">
             <i class="iconfont icon-icon-test1" style="margin-right: 5px;font-size: 15px;"></i>
@@ -66,6 +66,9 @@ const props = defineProps({
             display: inline-block;
             background-color: #2563eb;
             border-radius: vw(5);
+        }
+        .word{
+            width: vw(70);
         }
     }
 
