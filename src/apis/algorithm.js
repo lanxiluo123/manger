@@ -19,3 +19,7 @@ export function getAlgorith(){
 export function getExecutionType(){
     return request.get('/algorithms/execution-types')
 }
+
+export function lists(){
+    return request.get('/algorithms/page')
+}

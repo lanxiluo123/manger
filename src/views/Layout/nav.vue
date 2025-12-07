@@ -27,7 +27,6 @@ const meumItem = defineAsyncComponent(() => import("@views/Layout/MeunItem.vue")
 
 const router = useRouter()
 const route = useRoute()
-console.log(route)
 const navList = computed(() => arr)
 
 // ref引用
@@ -45,7 +44,6 @@ const hideActive = ref(false)
 const activeMenu = computed(() => {
   return route.meta?.title
 })
-console.log(activeMenu, 'activeMenu')
 
 const openedMenus = computed(() => {
   return navList.value?.map(item => item.name) || []

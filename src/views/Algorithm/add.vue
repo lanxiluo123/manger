@@ -1,10 +1,11 @@
 <template>
-    <el-dialog v-model="dialogVisible" :title="titleName" width="900" :close-on-click-modal="false"
+    <el-dialog v-model="dialogVisible" :title="titleName" width="600" :close-on-click-modal="false"
         :close-on-press-escape="false" :draggable="true" custom-class="dialog_box">
-        <el-form :label-position="'top'" label-width="auto" :model="form" style="width: 100%;">
+        <el-form :label-position="'top'" label-width="auto" :model="form" style="width: 100%;"
+            @submit.prevent="onSubmit">
             <el-collapse v-model="activeNames" @change="handleChange">
                 <el-collapse-item title="基础信息" name="1">
-                    <el-row :gutter="20">
+                    <el-row :gutter="20" style="margin-top: 10px;">
                         <el-col :span="12">
                             <el-form-item label="算法名称">
                                 <el-input v-model="form.name" />
@@ -52,8 +53,9 @@
                     <el-row :gutter="20">
                         <el-col :span="24">
                             <el-form-item label="输出产品数据类型">
-                                <el-select v-model="form.outputDataTypeId" placeholder="" style="width:100%">
-                                    <el-option v-for="item in param4" :key="item.id" :label="item.name"
+                                <el-select v-model="form.outputDataTypeId" placeholder="" style="width:100%" multiple
+                                    collapse-tags collapse-tags-tooltip>
+                                    <el-option v-for="item in dataTypeList" :key="item.id" :label="item.name"
                                         :value="item.id" />
                                 </el-select>
                             </el-form-item>
@@ -61,7 +63,7 @@
                     </el-row>
                 </el-collapse-item>
                 <el-collapse-item title="参数配置" name="2">
-                    <el-row :gutter="20" style="margin-bottom: 20px;">
+                    <el-row :gutter="20" style="margin-bottom: 10px;margin-top: 10px;">
                         <el-col :span="24">
                             <el-button type="success" size="mini" @click="addparms">
                                 <i class="iconfont icon-jia" style="margin-right: 5px;"></i>
@@ -73,19 +75,19 @@
                         <div class="parmsitemsBox">
                             <div v-for="(rows, index) in form.paramMetas" :key="index">
                                 <div class="parmsitems">
-                                    <span>参数{{ index + 1 }}</span>
+                                    <span style="color: #e5e7eb;">参数{{ index + 1 }}</span>
                                     <i class="iconfont icon-close" style="margin-right: 5px; color: red;"
                                         v-if="showColse" @click="deletParms(index)"></i>
                                 </div>
                                 <el-row :gutter="20">
                                     <el-col :span="12">
                                         <el-form-item label="参数键名">
-                                            <el-input v-model="form.param" />
+                                            <el-input v-model="rows.param" />
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12">
                                         <el-form-item label="参数类型">
-                                            <el-select v-model="form.paramType" placeholder="" style="width:100%">
+                                            <el-select v-model="rows.paramType" placeholder="" style="width:100%">
                                                 <el-option v-for="(item, index) in param1" :key="index"
                                                     :label="item.label" :value="item.value" />
                                             </el-select>
@@ -95,12 +97,12 @@
                                 <el-row :gutter="20">
                                     <el-col :span="12">
                                         <el-form-item label="显示标签">
-                                            <el-input v-model="form.paramName" />
+                                            <el-input v-model="rows.paramName" />
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12">
                                         <el-form-item label="是否必填">
-                                            <el-select v-model="form.required" placeholder="" style="width:100%">
+                                            <el-select v-model="rows.required" placeholder="" style="width:100%">
                                                 <el-option :label="'是'" :value="'true'" />
                                                 <el-option :label="'否'" :value="'false'" />
                                             </el-select>
@@ -115,7 +117,7 @@
         </el-form>
         <template #footer>
             <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">
+            <el-button type="primary" @click="onSubmit">
                 保存
             </el-button>
         </template>
@@ -123,10 +125,9 @@
     </el-dialog>
 </template>
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, inject, reactive, ref } from 'vue';
 import {
     add as addApi,
-    deletes as deletesApi,
     getParmsType as getParmsTypeApi,
     getAlgorith as getAlgorithApi,
     getExecutionType as getExecutionTypeApi
@@ -141,7 +142,7 @@ const form = reactive({
     category: '',
     version: '',
     executionType: '',
-    scriptOrImagePath: '',
+    scriptOrImagePath: 'https://loremflickr.com/400/400?lock=39557356805993',
     description: '',
     outputDataTypeId: '',
     paramMetas: [
@@ -151,7 +152,8 @@ const form = reactive({
             paramName: '',
             required: ''
         }
-    ]
+    ],
+    name:''
 })
 const activeNames = ref(['1', '2'])
 const titleName = computed(() => {
@@ -161,6 +163,7 @@ const showColse = computed(() => {
     return form.paramMetas.length == 1 ? false : true
 })
 
+const dataTypeList = inject('dataTypeList')
 const param1 = ref([])
 const param2 = ref([])
 const param3 = ref([])
@@ -185,6 +188,18 @@ function deletParms(val) {
 
 async function getAllTypes() {
     await Promise.allSettled([type1(), type2(), type3(), type4()])
+}
+
+async function onSubmit() {
+    try {
+        const { outputDataTypeId, ...options} = form
+        await addApi({
+            outputDataTypeId: outputDataTypeId.join(','),
+            ...options
+        })
+    } catch (error) {
+
+    }
 }
 
 getAllTypes();
@@ -248,6 +263,7 @@ defineExpose({
         height: vh(20);
         justify-content: space-between;
         align-items: center;
+        margin-bottom: vh(10);
     }
 }
 </style>

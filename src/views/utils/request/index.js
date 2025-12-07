@@ -49,7 +49,6 @@ service.interceptors.request.use((config) => {
 
 // 响应拦截器
 service.interceptors.response.use((response) => {
-    console.log(response,'response')
     const { data = {}, code = '', message = '' } = response.data
     if (code == 1) {
         return response.data || response
@@ -94,11 +93,10 @@ function handleBusinessError(code, message) {
                 message: message,
             });
         default:
-            // ElMessage.error({
-            //     message: errorMsg,
-            //     description:'1' ,
-            // });
-            console.log(errorMsg)
+            ElMessage.error({
+                message: errorMsg,
+                description:'1' ,
+            });
         // return
     }
 }
