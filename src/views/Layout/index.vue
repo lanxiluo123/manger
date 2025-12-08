@@ -66,13 +66,17 @@ layoutSize.innerHeight = computed(() => height.value - OFFSET_LARGE_BASE * 2);
         color: #e5e7eb;
       }
 
+
+
       :deep(.el-select__wrapper) {
         background-color: #374151;
         box-shadow: 0 0 0 1px #374151 inset;
         color: #e5e7eb;
       }
 
+      :deep(.el-input__count-inner) {
 
+      }
 
       :deep(.el-input__wrapper) {
         background-color: #374151;
@@ -83,6 +87,15 @@ layoutSize.innerHeight = computed(() => height.value - OFFSET_LARGE_BASE * 2);
       :deep(.el-input__inner) {
         color: #e5e7eb;
       }
+
+      :deep(.el-input .el-input__count .el-input__count-inner){
+         background-color: #374151;
+      }
+
+      :deep(.el-textarea .el-input__count){
+        background-color: #374151;
+      }
+
 
       :deep(.el-select__placeholder) {
         color: #e5e7eb;
@@ -96,12 +109,12 @@ layoutSize.innerHeight = computed(() => height.value - OFFSET_LARGE_BASE * 2);
 
       :deep(.el-collapse) {
         --el-collapse-header-bg-color: #374151;
-        --el-collapse-border-color:#1f2937;
-        --el-collapse-content-bg-color:#1f2937;
-        --el-collapse-header-text-color:#e5e7eb;
+        --el-collapse-border-color: #1f2937;
+        --el-collapse-content-bg-color: #1f2937;
+        --el-collapse-header-text-color: #e5e7eb;
       }
 
-      :deep(.el-collapse-item__title){
+      :deep(.el-collapse-item__title) {
         padding: 0 vw(10);
         box-sizing: border-box;
         font-size: vh(18);

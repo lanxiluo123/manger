@@ -10,15 +10,15 @@
             </el-button>
         </template>
         <template #content>
-            <table-box ref="tableBoxRef" pagination v-model="queryParams" v-model:total="querytotal" @change="getItems" :offset-height="-100"
-                :data="queryItems">
+            <table-box ref="tableBoxRef" pagination v-model="queryParams" v-model:total="querytotal" @change="getItems"
+                :offset-height="-100" :data="queryItems">
                 <el-table-column prop="code" label="数据名称" />
                 <el-table-column prop="name" label="类型" />
                 <el-table-column prop="category" label="数据来源" />
                 <el-table-column prop="fileExtensions" label="所属流域" />
-                <el-table-column prop="iconClass" label="文件大小" /> 
-                 <el-table-column prop="iconClass" label="上传时间" />
-                  <el-table-column prop="iconClass" label="状态" />
+                <el-table-column prop="iconClass" label="文件大小" />
+                <el-table-column prop="iconClass" label="上传时间" />
+                <el-table-column prop="iconClass" label="状态" />
                 <el-table-column label="操作">
                     <template #default="{ row }">
                         <el-button size="small" type="primary" text @click="handleEdit(row)">
@@ -63,7 +63,7 @@ function add() {
     addViewRef.value?.openDialog?.()
 }
 
-function getItems(){
+function getItems() {
 
 }
 </script>
