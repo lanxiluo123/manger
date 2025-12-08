@@ -8,14 +8,19 @@
             <span class="type">灾害模拟</span> <span style="margin-left: 5px;">{{ items?.version }}</span>
         </div>
         <div class="items_box-version">
-            {{ items?.description }}
+            <overflow-tooltip :content="items?.description || '--'"></overflow-tooltip>
         </div>
         <div class="items_box-version">
-            {{ items?.scriptOrImagePath }}
+            <overflow-tooltip :content="items?.scriptOrImagePath || '--'"></overflow-tooltip>
         </div>
-        <div class="items_box-version">
-            <i class="iconfont icon-cut" style="margin-right: 5px;font-size: 15px;"></i> 
-            <span class="word">输出类型:</span><span style="margin-left: 5px;overflow: hidden;">{{ items?.outputDataTypeId}}</span>
+        <div class="items_box-type">
+            <div class="lable">
+                <i class="iconfont icon-cut" style="margin-right: 5px;font-size: 15px;"></i>
+                <span class="word">输出类型:</span>
+            </div>
+            <div class="content">
+                <overflow-tooltip :content="getOutTypeName(items?.outputDataTypeId) || '--'"></overflow-tooltip>
+            </div>
         </div>
         <div class="items_box-version">
             <i class="iconfont icon-icon-test1" style="margin-right: 5px;font-size: 15px;"></i>
@@ -27,11 +32,22 @@
     </div>
 </template>
 <script setup>
+import OverflowTooltip from '@/components/OverflowTooltip/index.vue'
+import { inject } from '@vue/runtime-core';
 const props = defineProps({
     items: {
         type: Object,
     }
 })
+const dataTypeList = inject('dataTypeList')
+
+
+function getOutTypeName(value) {
+    if (!value) return undefined
+    console.log(dataTypeList.value)
+    const idsSet = new Set(value.split(','))
+    return dataTypeList.value.filter(({ id }) => (idsSet.has(id))).map(item => (item.name)).join(',')
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,15 +77,47 @@ const props = defineProps({
         overflow: hidden;
         justify-content: flex-start;
         width: 100%;
+
         .type {
             padding: vw(2) vw(8);
             display: inline-block;
             background-color: #2563eb;
             border-radius: vw(5);
         }
-        .word{
-            width: vw(70);
+
+        .lable {
+            width: vw(100);
+
+            .word {
+                width: vw(90);
+            }
         }
+
+    }
+
+    &-type {
+        display: flex;
+        align-items: center;
+        font-size: vh(15);
+        overflow: hidden;
+        justify-content: flex-start;
+        width: 100%;
+        box-sizing: border-box;
+
+        .lable {
+            width: vw(100);
+
+            .word {
+                width: vw(90);
+            }
+        }
+
+        .content {
+            padding-top: vw(5);
+            box-sizing: border-box;
+            width: calc(100% - vw(100));
+        }
+
     }
 
     &-path {
